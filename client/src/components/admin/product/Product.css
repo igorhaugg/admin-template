@@ -1,0 +1,123 @@
+.product-admin {
+  padding: 2rem 4rem;
+
+  transition: all 0.15s ease-in-out;
+  transform: translateX(0);
+  width: 100vw;
+}
+
+@media (min-width: 765px) {
+  .product-admin {
+    transform: translateX(-25rem);
+    width: 100vw;
+  }
+}
+
+@media (min-width: 770px) {
+  .product-admin {
+    transform: translateX(0);
+    width: calc(100vw - 25rem);
+  }
+}
+
+.product-admin__title {
+  color: #787878;
+  font-size: 2rem;
+  margin-right: 0.7rem;
+  /* transition: font-size 0.15s ease-in-out; */
+}
+
+@media (min-width: 770px) {
+  .product-admin__title {
+    font-size: 1.6rem;
+  }
+}
+
+.product-admin__list {
+  display: flex;
+  flex-direction: column;
+  margin-top: 3rem;
+}
+
+.product-admin__item {
+  align-items: center;
+  background-color: #7a47ab;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.5rem;
+  font-weight: lighter;
+  padding: 1.8rem 3rem;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  transition: transform 0.15s ease-in-out;
+}
+
+.product-admin__item:hover {
+  transform: scale(1.01);
+}
+
+.product-admin__actions {
+  align-items: center;
+  display: flex;
+  margin-top: 0.3rem;
+}
+
+.product-admin__icon {
+  height: 2rem;
+  margin-right: 1rem;
+  transition: transform 0.15s ease-in-out;
+}
+
+.product-admin__icon-hover:hover {
+  transform: scale(1.1);
+}
+
+.product-admin__back {
+  align-items: center;
+  background-color: #787878;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  padding: 0.5rem 1rem;
+  width: 9rem;
+}
+
+.product-admin__back:active {
+  box-shadow: 0 0 0 0.2rem #787878;
+}
+
+.product-admin__form {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  margin-top: 2rem;
+}
+
+.product-admin__form-group {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+@media (min-width: 770px) {
+  .product-admin__form-group {
+    flex-direction: row;
+  }
+}
+
+.product-admin__form-group > * {
+  width: 100%;
+}
+
+@media (min-width: 770px) {
+  .product-admin__form-group > * {
+    width: 49%;
+  }
+}
+
+.product-admin__image {
+  display: block;
+  height: auto;
+  margin-bottom: 1rem;
+  width: 100%;
+}

@@ -1,0 +1,47 @@
+.button {
+  border-radius: 5px;
+  font-size: 1.8rem;
+  text-transform: uppercase;
+  transition: box-shadow 0.15s ease-in-out;
+}
+
+.button:active {
+  box-shadow: 0 0 0 0.2rem rgba(108, 17, 254, 0.5);
+}
+
+.button--auth {
+  background: linear-gradient(310deg, rgb(108, 17, 254), rgb(196, 131, 194));
+  color: white;
+  margin: 2rem auto;
+  padding: 1.2rem 3rem;
+}
+
+.button--add {
+  background-color: rgb(215, 130, 217);
+  border-radius: 50%;
+  color: white;
+  font-size: 2.2rem;
+  padding: 0.8rem 1.5rem;
+  /* transition: all 0.15s ease-in-out; */
+}
+
+.button--add:active {
+  box-shadow: 0 0 0 0.2rem rgb(215, 130, 217);
+}
+
+@media (min-width: 770px) {
+  .button--add {
+    font-size: 1.8rem;
+    padding: 0.8rem 1.3rem;
+  }
+}
+
+.button--confirm {
+  background-color: #787878;
+  color: white;
+  padding: 1rem 1.5rem;
+}
+
+.button--confirm:active {
+  box-shadow: 0 0 0 0.2rem #787878;
+}

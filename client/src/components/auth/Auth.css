@@ -1,0 +1,42 @@
+/* background-image: url('auth.jpeg'), linear-gradient(#eb01a5, #d13531); */
+.auth {
+  background: url('./images/auth_mobile.jpeg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+@media (min-width: 450px) {
+  .auth {
+    background: url('./images/auth.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+}
+
+.auth__title {
+  color: #787878;
+  font-size: 2.8rem;
+  font-weight: lighter;
+  margin-bottom: 4rem;
+  text-align: center;
+}
+
+.auth__form {
+  background-color: rgba(248, 248, 248, 0.9);
+  border-radius: 5px;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+  padding: 5rem 2rem;
+  width: 38rem;
+}
+
+.auth__message {
+  margin-top: 2rem;
+}
+
+.auth__link {
+  border: 1px transparent solid;
+  border-bottom-color: rgb(196, 131, 194);
+  color: rgb(108, 17, 254);
+}

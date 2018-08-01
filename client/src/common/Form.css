@@ -1,0 +1,90 @@
+.input {
+  background-color: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(120, 120, 120, 0.5);
+  border-radius: 5px;
+  color: black;
+  font-size: 2rem;
+  padding: 1rem;
+  transition: background-color linear 1s, color linear 1s, border linear 1s;
+  width: 100%;
+}
+
+.input:active:not(.input--file-button),
+.input:focus:not(.input--file-button) {
+  background-color: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(255, 0, 0, 0.5);
+  color: black;
+}
+
+.input:active:not(.input__error):not(.input--file-button),
+.input:focus:not(.input__error):not(.input--file-button) {
+  background-color: rgba(120, 120, 120, 0.5);
+  border: 1px solid rgba(120, 120, 120, 0.5);
+  color: white;
+}
+
+.input--file-button {
+  display: flex;
+  cursor: pointer;
+  padding: 0.6rem 1rem;
+}
+
+.input--file-button span {
+  align-items: center;
+  display: flex;
+  width: 100%;
+}
+
+.input__item {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 0;
+}
+
+.input__error {
+  background-color: rgba(255, 0, 0, 0.5);
+  border: 1px solid rgba(255, 0, 0, 0.5);
+}
+
+.input__message {
+  color: rgb(224, 0, 0);
+  font-size: 1.4rem;
+  margin-left: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.label {
+  color: #787878;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+}
+
+.input__password {
+  position: relative;
+}
+
+.input__password-label {
+  color: #787878;
+  height: 100%;
+  position: absolute;
+  right: 1rem;
+  top: 25%;
+}
+
+.input__file {
+  opacity: 0;
+  transform: translateX(-8rem);
+  width: 1px;
+}
+
+.input__icon {
+  margin-left: 0.5rem;
+}
+
+.select {
+  /* appearance: none; */
+  border: 1px solid rgba(120, 120, 120, 0.5);
+  border-radius: 5px;
+  font-size: 2rem;
+  padding: 1rem;
+}

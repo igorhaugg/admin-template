@@ -1,0 +1,16 @@
+.hero {
+  min-height: 110vh;
+  min-width: 100vw;
+  position: relative;
+}
+
+.hero__background {
+  background: linear-gradient(13deg, rgb(40, 20, 131), rgb(215, 130, 217));
+  height: 100%;
+  position: absolute;
+  top: 0;
+  transform: skewY(-12deg);
+  transform-origin: 0;
+  width: 100%;
+  z-index: -1;
+}
