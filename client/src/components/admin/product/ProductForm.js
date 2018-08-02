@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-// import ReactS3 from 'react-s3';
 import ReactS3 from '../../../common/react-s3';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -21,6 +20,7 @@ import {
 import { getCategories } from '../../../actions/categoryActions';
 
 import './Product.css';
+import ImageCompressor from 'image-compressor.js';
 
 const config = {
   bucketName: process.env.REACT_APP_BUCKET_NAME.replace("'", ''),
@@ -122,21 +122,50 @@ class ProductInput extends Component {
 
   onChange = e => {
     if (e.target.files) {
-      let file = e.target.files[0];
-      let extension = file.name.substr(file.name.lastIndexOf('.') + 1);
+      try {
+        let file = e.target.files[0];
+        let extension = file.name.substr(file.name.lastIndexOf('.') + 1);
+        if (
+          extension.toLowerCase() === 'png' ||
+          extension.toLowerCase() === 'gif'
+        ) {
+          extension = 'jpeg';
+        }
 
-      this.setState({ disabled: true });
-      if (this.validateExtension(extension)) {
-        let fileRenamed = new File(
-          [file],
-          Date.now() + Math.floor(Math.random()) + '.' + extension
-        );
-        this.onUpload(fileRenamed);
-      } else {
+        this.setState({ disabled: true });
+        if (file.size > 2000000) {
+          this.setState({
+            errors: {
+              image: 'Images must have a max size of 2MB.'
+            }
+          });
+        } else if (this.validateExtension(extension)) {
+          let type = 'image/' + extension;
+          let fileRenamed = new File(
+            [file],
+            Date.now() + Math.floor(Math.random()) + '.' + extension,
+            {
+              type: type
+            }
+          );
+          this.onUpload(fileRenamed);
+          this.setState({
+            errors: {
+              image: `Image ${file.name} loaded.`
+            }
+          });
+        } else {
+          this.setState({
+            errors: {
+              image:
+                'Unknown extension, please select a jpeg, jpg, png or gif image.'
+            }
+          });
+        }
+      } catch (e) {
         this.setState({
           errors: {
-            image:
-              'Unknown extension, please select a jpeg, jpg, png or gif image.'
+            image: 'Please select a file.'
           }
         });
       }
@@ -146,8 +175,24 @@ class ProductInput extends Component {
 
   onUpload = async file => {
     try {
-      const data = await ReactS3.uploadFile(file, config);
-      this.setState({ imagePath: data.location, disabled: false });
+      let image;
+      let compressImagePromise = new Promise(function(resolve, reject) {
+        new ImageCompressor(file, {
+          quality: file.size > 1500000 ? 0.2 : 0.4,
+          success(result) {
+            ReactS3.uploadFile(result, config).then(data => {
+              image = data.location;
+              return resolve(image);
+            });
+          },
+          error(e) {
+            reject(e);
+          }
+        });
+      });
+      compressImagePromise.then(() => {
+        this.setState({ imagePath: image, disabled: false });
+      });
     } catch (err) {
       this.setState({
         errors: {
@@ -163,12 +208,10 @@ class ProductInput extends Component {
       extension.endsWith('jpg') ||
       extension.endsWith('png') ||
       extension.endsWith('gif') ||
-      extension.endsWith('svg') ||
       extension.endsWith('JPEG') ||
       extension.endsWith('PNG') ||
       extension.endsWith('JPG') ||
-      extension.endsWith('GIF') ||
-      extension.endsWith('SVG')
+      extension.endsWith('GIF')
     );
   };
 
