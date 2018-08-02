@@ -5,6 +5,7 @@ import { withRouter, Link } from 'react-router-dom';
 
 import InputItem from '../../common/InputItem';
 import Button from '../../common/Button';
+import Spinner from '../../common/Spinner';
 import { registerUser } from '../../actions/authActions';
 import './Auth.css';
 
@@ -18,7 +19,8 @@ export class Register extends Component {
     passwordType: 'password',
     passwordClicked: false,
     password2Type: 'password',
-    password2Clicked: false
+    password2Clicked: false,
+    show: false
   };
 
   componentDidMount() {
@@ -39,6 +41,8 @@ export class Register extends Component {
 
   onSubmit = e => {
     e.preventDefault();
+
+    this.setState({ show: true });
 
     const user = {
       name: this.state.name,
@@ -115,6 +119,7 @@ export class Register extends Component {
               passwordClicked={this.state.password2Clicked}
               error={errors.password2}
             />
+            {this.state.show && <Spinner />}
             <div style={divStyle}>
               <Button type="submit" text="Continue" desc="auth" />
             </div>

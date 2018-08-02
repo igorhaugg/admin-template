@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
-// import ReactS3 from 'react-s3';
 import ReactS3 from '../../../common/react-s3';
 import { connect } from 'react-redux';
+
 import ProductItem from './ProductItem';
+import Spinner from '../../../common/Spinner';
 
 import { getProducts, removeProduct } from '../../../actions/productActions';
 
@@ -15,8 +16,12 @@ const config = {
 };
 
 class ProductList extends Component {
-  componentDidMount() {
-    this.props.getProducts();
+  state = {
+    show: false
+  };
+  async componentDidMount() {
+    await this.props.getProducts();
+    this.setState({ show: true });
   }
   handleDelete = (id, image) => {
     // confirmation
@@ -38,21 +43,24 @@ class ProductList extends Component {
   render() {
     const { products } = this.props;
     return (
-      <ul className="product-admin__list">
-        {products.noproducts ? (
-          <li>{products.noproducts}</li>
-        ) : (
-          products.map(product => {
-            return (
-              <ProductItem
-                key={product._id}
-                {...product}
-                handleDelete={this.handleDelete}
-              />
-            );
-          })
-        )}
-      </ul>
+      <Fragment>
+        {!this.state.show && products.length === 0 && <Spinner />}
+        <ul className="product-admin__list">
+          {products.noproducts ? (
+            <li>{products.noproducts}</li>
+          ) : (
+            products.map(product => {
+              return (
+                <ProductItem
+                  key={product._id}
+                  {...product}
+                  handleDelete={this.handleDelete}
+                />
+              );
+            })
+          )}
+        </ul>
+      </Fragment>
     );
   }
 }

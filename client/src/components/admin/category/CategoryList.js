@@ -1,8 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-// import { Link } from 'react-router-dom';
+
 import CategoryItem from './CategoryItem';
+import Spinner from '../../../common/Spinner';
 
 import {
   getCategories,
@@ -10,8 +11,12 @@ import {
 } from '../../../actions/categoryActions';
 
 class CategoryList extends Component {
-  componentDidMount() {
-    this.props.getCategories();
+  state = {
+    show: false
+  };
+  async componentDidMount() {
+    await this.props.getCategories();
+    this.setState({ show: true });
   }
   handleDelete = id => {
     // confirmation
@@ -20,17 +25,20 @@ class CategoryList extends Component {
   render() {
     const { categories } = this.props;
     return (
-      <ul className="category-admin__list">
-        {categories.map(category => {
-          return (
-            <CategoryItem
-              key={category._id}
-              {...category}
-              onDelete={this.handleDelete}
-            />
-          );
-        })}
-      </ul>
+      <Fragment>
+        {!this.state.show && categories.length === 0 && <Spinner />}
+        <ul className="category-admin__list">
+          {categories.map(category => {
+            return (
+              <CategoryItem
+                key={category._id}
+                {...category}
+                onDelete={this.handleDelete}
+              />
+            );
+          })}
+        </ul>
+      </Fragment>
     );
   }
 }

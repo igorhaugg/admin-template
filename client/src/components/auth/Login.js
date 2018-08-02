@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 
 import InputItem from '../../common/InputItem';
 import Button from '../../common/Button';
+import Spinner from '../../common/Spinner';
 import { loginUser } from '../../actions/authActions';
 import './Auth.css';
 
@@ -14,7 +15,8 @@ export class Login extends Component {
     password: '',
     errors: {},
     passwordType: 'password',
-    passwordClicked: false
+    passwordClicked: false,
+    show: false
   };
 
   componentDidMount() {
@@ -35,6 +37,8 @@ export class Login extends Component {
 
   onSubmit = e => {
     e.preventDefault();
+
+    this.setState({ show: true });
 
     const user = {
       email: this.state.email,
@@ -84,6 +88,7 @@ export class Login extends Component {
               passwordClicked={this.state.passwordClicked}
               error={errors.password}
             />
+            {this.state.show && <Spinner />}
             <div style={divStyle}>
               <Button type="submit" text="Continue" desc="auth" />
             </div>

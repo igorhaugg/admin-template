@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ReactS3 from '../../../common/react-s3';
+import ImageCompressor from 'image-compressor.js';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
@@ -9,6 +10,7 @@ import Dashboard from '../dashboard/Dashboard';
 import InputItem from '../../../common/InputItem';
 import SelectItem from '../../../common/SelectItem';
 import Button from '../../../common/Button';
+import Spinner from '../../../common/Spinner';
 import BackImage from '../images/back.png';
 
 import {
@@ -20,7 +22,6 @@ import {
 import { getCategories } from '../../../actions/categoryActions';
 
 import './Product.css';
-import ImageCompressor from 'image-compressor.js';
 
 const config = {
   bucketName: process.env.REACT_APP_BUCKET_NAME.replace("'", ''),
@@ -35,11 +36,11 @@ class ProductInput extends Component {
     name: '',
     image: '',
     imagePath: '',
+    oldImage: '',
+    id: '',
     errors: {},
     editing: false,
-    id: '',
-    disabled: true,
-    oldImage: '',
+    disabled: false,
     submited: false
   };
 
@@ -137,7 +138,8 @@ class ProductInput extends Component {
           this.setState({
             errors: {
               image: 'Images must have a max size of 2MB.'
-            }
+            },
+            disabled: false
           });
         } else if (this.validateExtension(extension)) {
           let type = 'image/' + extension;
@@ -159,14 +161,16 @@ class ProductInput extends Component {
             errors: {
               image:
                 'Unknown extension, please select a jpeg, jpg, png or gif image.'
-            }
+            },
+            disabled: false
           });
         }
       } catch (e) {
         this.setState({
           errors: {
             image: 'Please select a file.'
-          }
+          },
+          disabled: false
         });
       }
     }
@@ -197,7 +201,8 @@ class ProductInput extends Component {
       this.setState({
         errors: {
           image: 'Impossible to upload the image file.'
-        }
+        },
+        disabled: false
       });
     }
   };
@@ -235,7 +240,6 @@ class ProductInput extends Component {
             onChange={this.onChange}
             error={errors.name}
           />
-
           <div className="product-admin__form-group">
             <SelectItem
               label="category"
@@ -246,7 +250,6 @@ class ProductInput extends Component {
               categories={this.props.categories}
               message="Select Category"
             />
-
             <InputItem
               label="image"
               name="image"
@@ -256,13 +259,20 @@ class ProductInput extends Component {
               error={errors.image}
             />
           </div>
-          {(this.state.editing || this.state.imagePath) && (
-            <img
-              src={this.state.imagePath}
-              alt="Product"
-              className="product-admin__image"
-            />
+          {this.state.editing || this.state.imagePath ? (
+            this.state.disabled ? (
+              <Spinner />
+            ) : (
+              <img
+                src={this.state.imagePath}
+                alt="Product"
+                className="product-admin__image"
+              />
+            )
+          ) : (
+            undefined
           )}
+          {this.state.disabled && !this.state.editing && <Spinner />}
           <Button
             type="submit"
             text="Confirm"

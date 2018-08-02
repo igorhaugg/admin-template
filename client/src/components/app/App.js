@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 
 import PrivateRoute from './PrivateRoute';
 import setAuthToken from '../../utils/token';
+import Spinner from '../../common/Spinner';
 import store from '../../store/store';
 import { setCurrentUser, logoutUser } from '../../actions/authActions';
 
@@ -29,7 +30,11 @@ if (localStorage.jwtToken) {
 
 // Loading component
 
-const Loading = () => <h1>Loading...</h1>;
+const Loading = () => (
+  <div className="full-centralize full-screen">
+    <Spinner />
+  </div>
+);
 
 // Public components
 
