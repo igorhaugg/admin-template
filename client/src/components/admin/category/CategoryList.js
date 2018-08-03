@@ -15,11 +15,26 @@ import {
 
 class CategoryList extends Component {
   state = {
+    errors: {},
+    message: false,
     show: false
   };
   async componentDidMount() {
     await this.props.getCategories();
     this.setState({ show: true });
+  }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors.hasproducts) {
+      this.setState({ errors: nextProps.errors, message: true });
+      setTimeout(() => {
+        this.setState({ errors: {}, message: false });
+      }, 5000);
+    }
+  }
+  componentWillUnmount() {
+    if (this.timerHandle) {
+      clearTimeout(this.timerHandle);
+    }
   }
   handleDelete = id => {
     confirmAlert({
@@ -51,6 +66,10 @@ class CategoryList extends Component {
     return (
       <Fragment>
         {!this.state.show && categories.length === 0 && <Spinner />}
+        {this.state.message && (
+          <div className="error__message">{this.state.errors.hasproducts}</div>
+        )}
+
         <ul className="category-admin__list">
           <ReactCSSTransitionGroup
             transitionName="transition"
@@ -76,6 +95,7 @@ class CategoryList extends Component {
 CategoryList.propTypes = {
   getCategories: PropTypes.func.isRequired,
   removeCategory: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired,
   categories: PropTypes.array.isRequired
 };
 
@@ -86,7 +106,8 @@ const mapStateToProps = state => {
   });
 
   return {
-    categories
+    categories,
+    errors: state.errors
   };
 };
 

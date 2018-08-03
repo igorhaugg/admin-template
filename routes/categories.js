@@ -8,6 +8,7 @@ const router = express.Router();
 
 const validateCategory = require('../validation/category');
 const Category = require('../models/Category');
+const Product = require('../models/Product');
 const keys = require('../config/keys');
 
 // @route   GET api/categories
@@ -144,6 +145,13 @@ router.delete(
 
     if (!ObjectID.isValid(id)) {
       errors.id = 'Invalid ID';
+    }
+
+    const hasProducts = await Product.find({ category: id });
+    if (!hasProducts || hasProducts.length !== 0) {
+      errors.hasproducts =
+        'This category has products associated and cannot be deleted';
+      return res.status(404).json(errors);
     }
 
     try {

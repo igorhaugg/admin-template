@@ -93,3 +93,10 @@
   border-top: 1px solid rgba(0, 0, 0, 0.1);
   margin-top: 2rem;
 }
+
+.error__message {
+  background: #ed1629;
+  color: white;
+  margin-top: 3rem;
+  padding: 1.3rem 3rem;
+}
