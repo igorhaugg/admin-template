@@ -88,7 +88,7 @@ export class Login extends Component {
               passwordClicked={this.state.passwordClicked}
               error={errors.password}
             />
-            {this.state.show && <Spinner />}
+            {this.state.show && Object.keys(errors).length === 0 && <Spinner />}
             <div style={divStyle}>
               <Button type="submit" text="Continue" desc="auth" />
             </div>

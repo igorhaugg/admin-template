@@ -19,19 +19,24 @@ const CategoryItem = ({ name, _id, onDelete }) => (
         </Link>
       </li>
       <li>
-        <Link to={`/admin/categories`}>
-          {/* <Link to={`/admin/categories/delete/${_id}`}> */}
-          <img
-            src={DeleteImage}
-            alt="Delete Icon"
-            title="Delete category"
-            className="category-admin__icon category-admin__icon-hover"
-            onClick={() => onDelete(_id)}
-          />
-        </Link>
+        <img
+          src={DeleteImage}
+          alt="Delete Icon"
+          title="Delete category"
+          className="category-admin__icon category-admin__icon-hover"
+          onClick={() => onDelete(_id)}
+        />
       </li>
     </ul>
   </li>
 );
+
+// const CategoryItem = ({ name, _id, onDelete }) => (
+//   <li className="category-admin__item">
+//     <span>{name}</span>
+//   </i>
+
+//   </li>
+// );
 
 export default CategoryItem;

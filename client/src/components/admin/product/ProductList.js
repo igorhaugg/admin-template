@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import ReactS3 from '../../../common/react-s3';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { connect } from 'react-redux';
 import { confirmAlert } from 'react-confirm-alert';
 
@@ -69,19 +70,25 @@ class ProductList extends Component {
       <Fragment>
         {!this.state.show && products.length === 0 && <Spinner />}
         <ul className="product-admin__list">
-          {products.noproducts ? (
-            <li>{products.noproducts}</li>
-          ) : (
-            products.map(product => {
-              return (
-                <ProductItem
-                  key={product._id}
-                  {...product}
-                  handleDelete={this.handleDelete}
-                />
-              );
-            })
-          )}
+          <ReactCSSTransitionGroup
+            transitionName="transition"
+            transitionEnterTimeout={500}
+            transitionLeaveTimeout={500}
+          >
+            {products.noproducts ? (
+              <li>{products.noproducts}</li>
+            ) : (
+              products.map(product => {
+                return (
+                  <ProductItem
+                    key={product._id}
+                    {...product}
+                    handleDelete={this.handleDelete}
+                  />
+                );
+              })
+            )}
+          </ReactCSSTransitionGroup>
         </ul>
       </Fragment>
     );

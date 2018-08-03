@@ -119,7 +119,7 @@ export class Register extends Component {
               passwordClicked={this.state.password2Clicked}
               error={errors.password2}
             />
-            {this.state.show && <Spinner />}
+            {this.state.show && Object.keys(errors).length === 0 && <Spinner />}
             <div style={divStyle}>
               <Button type="submit" text="Continue" desc="auth" />
             </div>
