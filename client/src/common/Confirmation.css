@@ -1,0 +1,33 @@
+.confirmation {
+  background-color: #7a47ab;
+  border-radius: 5px;
+  box-shadow: 0 0 0 0.2rem rgb(122, 71, 171);
+  padding: 5rem;
+}
+
+.confirmation__title {
+  color: white;
+  font-size: 2.8rem;
+}
+
+.confirmation__group {
+  align-items: center;
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 1.5rem;
+}
+
+.confirmation__button {
+  background: white;
+  border: 1px solid white;
+  border-radius: 5px;
+  color: #7a47ab;
+  margin: 0.5rem;
+  padding: 2rem;
+  transition: background 0.5s ease-in-out, color 0.15s ease-in-out;
+}
+
+.confirmation__button:hover {
+  background: #7a47ab;
+  color: white;
+}

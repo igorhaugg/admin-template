@@ -2,9 +2,11 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import ReactS3 from '../../../common/react-s3';
 import { connect } from 'react-redux';
+import { confirmAlert } from 'react-confirm-alert';
 
 import ProductItem from './ProductItem';
 import Spinner from '../../../common/Spinner';
+import '../../../common/Confirmation.css';
 
 import { getProducts, removeProduct } from '../../../actions/productActions';
 
@@ -24,13 +26,34 @@ class ProductList extends Component {
     this.setState({ show: true });
   }
   handleDelete = (id, image) => {
-    // confirmation
-    try {
-      this.props.removeProduct(id);
-      this.onDelete(image);
-    } catch (e) {
-      console.log(e);
-    }
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <div className="confirmation">
+            <h1 className="confirmation__title">Are you sure?</h1>
+            <div className="confirmation__group">
+              <button className="confirmation__button" onClick={onClose}>
+                No
+              </button>
+              <button
+                className="confirmation__button"
+                onClick={() => {
+                  try {
+                    this.props.removeProduct(id);
+                    this.onDelete(image);
+                  } catch (e) {
+                    console.log(e);
+                  }
+                  onClose();
+                }}
+              >
+                Yes, Delete it!
+              </button>
+            </div>
+          </div>
+        );
+      }
+    });
   };
   onDelete = async file => {
     try {

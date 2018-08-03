@@ -1,9 +1,11 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { confirmAlert } from 'react-confirm-alert';
 
 import CategoryItem from './CategoryItem';
 import Spinner from '../../../common/Spinner';
+import '../../../common/Confirmation.css';
 
 import {
   getCategories,
@@ -19,8 +21,29 @@ class CategoryList extends Component {
     this.setState({ show: true });
   }
   handleDelete = id => {
-    // confirmation
-    this.props.removeCategory(id);
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <div className="confirmation">
+            <h1 className="confirmation__title">Are you sure?</h1>
+            <div className="confirmation__group">
+              <button className="confirmation__button" onClick={onClose}>
+                No
+              </button>
+              <button
+                className="confirmation__button"
+                onClick={() => {
+                  this.props.removeCategory(id);
+                  onClose();
+                }}
+              >
+                Yes, Delete it!
+              </button>
+            </div>
+          </div>
+        );
+      }
+    });
   };
   render() {
     const { categories } = this.props;
