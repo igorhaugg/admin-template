@@ -26,7 +26,7 @@ class CategoryList extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.errors.hasproducts) {
       this.setState({ errors: nextProps.errors, message: true });
-      setTimeout(() => {
+      this.timerHandle = setTimeout(() => {
         this.setState({ errors: {}, message: false });
       }, 5000);
     }
