@@ -101,9 +101,13 @@ CategoryList.propTypes = {
 
 const mapStateToProps = state => {
   let categories = state.category.categories;
-  categories.sort((a, b) => {
-    return a.name.toUpperCase() > b.name.toUpperCase();
-  });
+  if (categories) {
+    categories.sort((a, b) => {
+      return a.name.toUpperCase() > b.name.toUpperCase();
+    });
+  } else {
+    categories = [];
+  }
 
   return {
     categories,
