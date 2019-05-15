@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import ReactS3 from '../../../common/react-s3';
 import ImageCompressor from 'image-compressor.js';
 import { Link } from 'react-router-dom';
+import { confirmAlert } from 'react-confirm-alert';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
@@ -100,7 +101,20 @@ class ProductInput extends Component {
       let fileName = file.substr(file.lastIndexOf('/') + 1);
       await ReactS3.deleteFile(fileName, config);
     } catch (err) {
-      console.log(err);
+      confirmAlert({
+        customUI: ({ onClose }) => {
+          return (
+            <div className="confirmation">
+              <h1 className="confirmation__title">Not possible to delete.</h1>
+              <div className="confirmation__group">
+                <button className="confirmation__button" onClick={onClose}>
+                  OK
+                </button>
+              </div>
+            </div>
+          );
+        }
+      });
     }
   };
 
